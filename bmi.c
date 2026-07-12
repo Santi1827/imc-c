@@ -1,10 +1,11 @@
 #include <stdio.h>
 
-int main(){
+int main() {
     double p, h, imc;
 
     printf("Ingrese el peso en kg: ");
     scanf("%lf", &p);
+
     printf("Ingrese la altura en metros: ");
     scanf("%lf", &h);
 
@@ -20,6 +21,17 @@ int main(){
     printf(" 25.0 a 29.9  |  Sobrepeso\n");
     printf("     >=30     |  Obesidad\n");
 
+    printf("\nUsted se encuentra en la condición: ");
+
+    if (imc < 18.5) {
+        printf("Bajo peso\n");
+    } else if (imc < 25.0) {
+        printf("Normal\n");
+    } else if (imc < 30.0) {
+        printf("Sobrepeso\n");
+    } else {
+        printf("Obesidad\n");
+    }
 
     return 0;
 }
