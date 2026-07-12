@@ -3,11 +3,23 @@
 int main() {
     double p, h, imc;
 
-    printf("Ingrese el peso en kg: ");
-    scanf("%lf", &p);
+    do {
+        printf("Ingrese el peso en kg: ");
+        scanf("%lf", &p);
 
-    printf("Ingrese la altura en metros: ");
-    scanf("%lf", &h);
+        if (p < 0) {
+            printf("Error. El peso no puede ser negativo.\n");
+        }
+    } while (p < 0);
+
+    do {
+        printf("Ingrese la altura en metros: ");
+        scanf("%lf", &h);
+
+        if (h < 0) {
+            printf("Error. La altura no puede ser negativa.\n");
+        }
+    } while (h < 0);
 
     imc = p / (h * h);
 
@@ -25,9 +37,9 @@ int main() {
 
     if (imc < 18.5) {
         printf("Bajo peso\n");
-    } else if (imc < 25.0) {
+    } else if (imc < 25) {
         printf("Normal\n");
-    } else if (imc < 30.0) {
+    } else if (imc < 30) {
         printf("Sobrepeso\n");
     } else {
         printf("Obesidad\n");
