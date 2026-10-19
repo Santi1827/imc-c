@@ -1,83 +1,61 @@
 #include <stdio.h>
 
-#define PI 3.14159
+// Definición de la constante simbólica TAM (cantidad fija de productos)
+#define TAM 5
 
-float calcularAreaRectangulo(float longitud, float altura)
-{
-    return longitud * altura;
-}
+int main() {
+    // Arreglos paralelos para códigos de barra y precios
+    int codigos[TAM];
+    float precios[TAM];
+    
+    int i;
+    int posMax = 0;
+    int posMin = 0;
 
-float calcularPerimetroRectangulo(float longitud, float altura)
-{
-    return 2 * (longitud + altura);
-}
+    printf("Ingrese %d productos, se solicitara el codigo y precio:\n", TAM);
 
-float calcularAreaCirculo(float radio)
-{
-    return PI * radio * radio;
-}
+    // Carga y validación de datos
+    for (i = 0; i < TAM; i++) {
+        // Validación del código de barras (entero positivo de hasta 9 cifras: 1 a 999999999)
+        do {
+            printf("Ingrese el codigo de barras (1-999999999): ");
+            scanf("%d", &codigos[i]);
+            
+            if (codigos[i] < 1 || codigos[i] > 999999999) {
+                printf("Error. El codigo de barras debe estar entre 1 y 999999999\n");
+            }
+        } while (codigos[i] < 1 || codigos[i] > 999999999);
 
-float calcularPerimetroCirculo(float radio)
-{
-    return 2 * PI * radio;
-}
+        // Validación del precio (no puede ser negativo)
+        do {
+            printf("Ingrese el precio: ");
+            scanf("%f", &precios[i]);
+            
+            if (precios[i] < 0) {
+                printf("Error. El precio no puede ser negativo.\n");
+            }
+        } while (precios[i] < 0);
+    }
 
-void imprimirResultados(float area, float perimetro)
-{
-    printf("El area es: %.2f\n", area);
-    printf("El perimetro es: %.2f\n", perimetro);
-}
+    // Mostrar la lista completa de productos
+    printf("\n%-10s %10s\n", "Codigo", "Precio");
+    for (i = 0; i < TAM; i++) {
+        printf("%10d %10.2f\n", codigos[i], precios[i]);
+    }
 
-int main()
-{
-    int opcion;
-    float longitud, altura, radio;
-    float area, perimetro;
-
-    // Menu y validacion de la opcion
-    do
-    {
-        printf("Ingrese la figura que desea calcular:\n");
-        printf("1: Rectangulo\n");
-        printf("2: Circulo\n");
-        printf("Opcion: ");
-        scanf("%d", &opcion);
-
-        if (opcion != 1 && opcion != 2)
-        {
-            printf("Opcion incorrecta. Intente nuevamente.\n\n");
+    // Búsqueda del mayor y menor precio
+    for (i = 1; i < TAM; i++) {
+        if (precios[i] > precios[posMax]) {
+            posMax = i;
         }
-
-    } while (opcion != 1 && opcion != 2);
-
-    // Calculos segun la figura seleccionada
-    if (opcion == 1)
-    {
-        printf("\nOpcion de rectangulo seleccionada\n");
-
-        printf("Ingrese la longitud del rectangulo: ");
-        scanf("%f", &longitud);
-
-        printf("Ingrese la altura del rectangulo: ");
-        scanf("%f", &altura);
-
-        area = calcularAreaRectangulo(longitud, altura);
-        perimetro = calcularPerimetroRectangulo(longitud, altura);
-
-        imprimirResultados(area, perimetro);
+        if (precios[i] < precios[posMin]) {
+            posMin = i;
+        }
     }
-    else
-    {
-        printf("\nOpcion de circulo seleccionada\n");
 
-        printf("Ingrese el radio del circulo: ");
-        scanf("%f", &radio);
-
-        area = calcularAreaCirculo(radio);
-        perimetro = calcularPerimetroCirculo(radio);
-
-        imprimirResultados(area, perimetro);
-    }
+    // Imprimir resultados del más caro y más barato
+    printf("\nMas caro: [%d] %.2f\n", codigos[posMax], precios[posMax]);
+    printf("Mas barato: [%d] %.2f\n", codigos[posMin], precios[posMin]);
 
     return 0;
 }
